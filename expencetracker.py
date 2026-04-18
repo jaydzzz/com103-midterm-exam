@@ -7,7 +7,14 @@ categories = [
 ]
 
 name = input("Student name: ")
-budget = float(input("Weekly budget: "))
+
+# Validate budget input (must be a number)
+while True:
+    try:
+        budget = float(input("Weekly budget: "))
+        break
+    except ValueError:
+        print("Invalid input. Please enter a number.")
 
 print("\n==========================================")
 print("   WEEKLY EXPENSE -- CATEGORIES")
@@ -22,14 +29,28 @@ expenses = []
 
 for i in range(4):
     print("\n--- EXPENSE " + str(i+1) + " ---")
-    cat_num = int(input("Category (0 to skip): "))
+
+    # Validate category input (must be number)
+    while True:
+        try:
+            cat_num = int(input("Category (0 to skip): "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
     if cat_num == 0:
         continue
 
     if cat_num >= 1 and cat_num <= 5:
         desc = input("Description: ")
-        amount = float(input("Amount: "))
+
+        # Validate amount input (must be number)
+        while True:
+            try:
+                amount = float(input("Amount: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
 
         flag = ""
         if amount > 0.25 * budget:
