@@ -1,4 +1,6 @@
-**List of expense categories with example items**
+This program is a simple weekly expense tracker that helps a student monitor their spending based on a set budget. It first defines different expense categories such as food, transportation, mobile/internet, school supplies, and entertainment, then asks the user to input their name and weekly budget with input validation to ensure only numbers are accepted. After displaying the categories, the program allows the user to enter up to four expenses by selecting a category, providing a description, and entering the amount spent, while also checking for invalid inputs and flagging any expense that exceeds 25% of the budget as a high expense. All valid expenses are stored in a list, then the program calculates the total amount spent, determines the remaining budget, and checks whether the user is within or over budget. Finally, it displays a formatted report showing all expenses, total spending, remaining balance, and a status message indicating if the budget was managed well or exceeded.
+
+# List of expense categories with examples
 categories = [
     ("Food & Drinks", "Lunch, snacks, coffee"),
     ("Transportation", "Bus, jeepney, ride-share"),
@@ -7,88 +9,100 @@ categories = [
     ("Entertainment", "Games, movies, hangout")
 ]
 
-**Ask user for student name**
+# Ask for student name
 name = input("Student name: ")
 
-**Ask user for weekly budget and convert it to float**
-budget = float(input("Weekly budget: "))
+# Input validation for weekly budget (must be a number)
+while True:
+    try:
+        budget = float(input("Weekly budget: "))
+        break
+    except ValueError:
+        print("Invalid input. Please enter a number.")
 
-**Display category section header**
+# Display header for categories
 print("\n==========================================")
 print("   WEEKLY EXPENSE -- CATEGORIES")
 print("==========================================")
 
-**Display all categories with numbering and examples**
+# Display all categories with numbering and examples
 for i in range(len(categories)):
     print(str(i+1) + ". " + categories[i][0] + " [e.g. " + categories[i][1] + "]")
 
 print("==========================================")
 
-**List to store all entered expenses**
+# List to store all expenses
 expenses = []
 
-**Loop for entering up to 4 expenses**
+# Loop to allow up to 4 expense entries
 for i in range(4):
     print("\n--- EXPENSE " + str(i+1) + " ---")
 
-  **Ask user to choose a category number (0 = skip)**
-    cat_num = int(input("Category (0 to skip): "))
+    # Input validation for category selection
+    while True:
+        try:
+            cat_num = int(input("Category (0 to skip): "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
-  **Skip this entry if user enters 0**
+    # Skip if user enters 0
     if cat_num == 0:
         continue
 
-  **Check if category number is valid**
+    # Check if category is valid
     if cat_num >= 1 and cat_num <= 5:
-  **Get description of expense**
+        # Get expense description
         desc = input("Description: ")
 
-  **Get amount spent and convert to float**
-        amount = float(input("Amount: "))
+        # Input validation for amount
+        while True:
+            try:
+                amount = float(input("Amount: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
 
-  **Flag high expense if it exceeds 25% of budget**
+        # Flag if expense is more than 25% of budget
         flag = ""
         if amount > 0.25 * budget:
             flag = "! High Expense Alert!"
 
-  **Store expense data in list**
+        # Store expense in list
         expenses.append([categories[cat_num - 1][0], desc, amount, flag])
     else:
-        # If invalid category is entered
         print("Invalid category. Skipped.")
 
-**Initialize total expense counter**
+# Calculate total expenses
 total = 0
-
-**Sum all expense amounts**
 for i in range(len(expenses)):
     total = total + expenses[i][2]
 
-**Compute remaining budget**
+# Calculate remaining budget
 remaining = budget - total
 
-**Check if user stayed within budget or overspent**
+# Check budget status
 if remaining >= 0:
     status = "Budget OK! Keep it up."
 else:
     status = "Overspent! Reduce spending."
 
-**Display final report header**
+# Display final report header
 print("\n======================================================")
 print("     " + name.upper() + " -- WEEKLY EXPENSE LOG")
 print("======================================================")
 
-**Display weekly budget**
+# Display budget
 print("  Weekly Budget  : P" + str(budget))
 
-**Display all recorded expenses**
+# Display all recorded expenses
 num = 1
 for i in range(len(expenses)):
     print("  [" + str(num) + "] " + expenses[i][0])
     print("      " + expenses[i][1] + "   P" + str(expenses[i][2]) + "  " + expenses[i][3])
     num = num + 1
 
-**Display summary of spending**
+# Display summary
 print("------------------------------------------------------")
 print("  Total Spent    : P" + str(total))
 print("  Remaining      : P" + str(remaining))
